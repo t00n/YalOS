@@ -13,6 +13,6 @@ void kernel_main()
 		terminal_putchar(c);
 		terminal_putchar('\n');
 	}
-	terminal_writestring("Hello, kernel world");
-	terminal_writestring("\nhaha\n");
+	terminal_writestring("Hello, kernel world\n");
+	terminal_writestring("haha\n");
 }

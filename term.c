@@ -18,6 +18,11 @@ void terminal_initialize()
 	terminal_column = 0;
 	terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
 	terminal_buffer = (uint16_t*) 0xB8000;
+	terminal_clear();
+}
+
+void terminal_clear()
+{
 	for ( size_t y = 0; y < VGA_HEIGHT; y++ )
 	{
 		for ( size_t x = 0; x < VGA_WIDTH; x++ )
@@ -26,26 +31,27 @@ void terminal_initialize()
 			terminal_buffer[index] = make_vgaentry(' ', terminal_color);
 		}
 	}
-}
- 
-void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
-{
-	const size_t index = y * VGA_WIDTH + x;
-	terminal_buffer[index] = make_vgaentry(c, color);
+	terminal_move_cursor();
 }
  
 void terminal_putchar(char c)
 {
-	if (c == '\n')
+	if (c == '\n' || c == '\r')
 	{
 		terminal_newline();
 	}
+	else if (c == '\b')
+	{
+		
+	}
 	else
 	{
-		terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+		const size_t index = terminal_row * VGA_WIDTH + terminal_column;
+		terminal_buffer[index] = make_vgaentry(c, terminal_color);
 		++terminal_column;
 	}
 	terminal_scroll();
+	terminal_move_cursor();
 }
  
 void terminal_writestring(const char* data)
@@ -53,6 +59,15 @@ void terminal_writestring(const char* data)
 	size_t datalen = strlen(data);
 	for ( size_t i = 0; i < datalen; i++ )
 		terminal_putchar(data[i]);
+}
+
+void terminal_move_cursor()
+{
+	size_t index = terminal_row * VGA_WIDTH + terminal_column;
+    outportb(0x3D4, 14);
+    outportb(0x3D5, index >> 8);
+    outportb(0x3D4, 15);
+    outportb(0x3D5, index);
 }
 
 void terminal_scroll()
@@ -63,20 +78,11 @@ void terminal_scroll()
 	}	
 	if ( terminal_row == VGA_HEIGHT )
 	{
-		for (size_t i = 1; i < VGA_HEIGHT; ++i)
-		{
-			memcpy((unsigned char *)terminal_buffer+(i-1)*VGA_WIDTH*2, (unsigned char *) terminal_buffer+i*VGA_WIDTH*2, VGA_WIDTH*2);
-		}
-		terminal_clear_line(VGA_HEIGHT-1);
+		// move buffer one line up
+		memcpy((unsigned char *)terminal_buffer, (unsigned char *) terminal_buffer+VGA_WIDTH*2, (VGA_HEIGHT-1)*VGA_WIDTH*2);
 		--terminal_row;
-	}
-}
-
-void terminal_clear_line(size_t l)
-{
-	for (size_t i = 0; i < VGA_WIDTH; ++i)
-	{
-		terminal_buffer[l*VGA_WIDTH+i] = make_vgaentry(' ', terminal_color);		
+		// clean last line
+        memsetw (terminal_buffer + (VGA_HEIGHT-1) * VGA_WIDTH, make_vgaentry(' ', terminal_color), VGA_WIDTH);
 	}
 }
 
