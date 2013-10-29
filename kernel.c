@@ -1,4 +1,5 @@
 #include "gdt.h"
+#include "idt.h"
 #include "term.h"
 
 #if defined(__linux__)
@@ -8,7 +9,15 @@
 void kernel_main()
 {
 	gdt_install();
-	terminal_initialize();
+	idt_install();
+	//~ terminal_initialize();
+	//~ 
+	//~ terminal_writestring("Hello, kernel world\n");
+	//~ 
+	//~ while (1)
+	//~ {
+		//~ int i = 2/0;
+	//~ }
 	
 	//~ for (char c = 48; c < 73; ++c)
 	//~ {
