@@ -36,13 +36,36 @@ void terminal_clear()
  
 void terminal_putchar(char c)
 {
-	if (c == '\n' || c == '\r')
+	if (c == '\n')
 	{
 		terminal_newline();
 	}
+	else if (c == '\r')
+	{
+		terminal_column = 0;
+	}
+    /* Handles a tab by incrementing the cursor's x, but only
+    *  to a point that will make it divisible by 8 */
+    else if(c == '\t')
+    {
+        terminal_column = (terminal_column + 8) & ~(8 - 1);
+    }
 	else if (c == '\b')
 	{
-		
+		if (terminal_column > 0)
+		{
+			--terminal_column;
+		}
+		else
+		{
+			if (terminal_row > 0)
+			{
+				--terminal_row;
+				terminal_column = VGA_WIDTH - 1;
+			}		
+		}
+		size_t index = terminal_row*VGA_WIDTH + terminal_column;
+		terminal_buffer[index] = make_vgaentry(' ', terminal_color);
 	}
 	else
 	{

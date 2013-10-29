@@ -14,5 +14,5 @@ void kernel_main()
 		terminal_putchar('\n');
 	}
 	terminal_writestring("Hello, kernel world\n");
-	terminal_writestring("haha\n");
+	terminal_writestring("haha\b\t\rbaba");
 }
