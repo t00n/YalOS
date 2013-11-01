@@ -1,3 +1,5 @@
+#ifndef __IDT_H
+#define __IDT_H
 
 /* Defines an IDT entry */
 struct idt_entry
@@ -28,3 +30,5 @@ struct idt_ptr idtp;
 extern void idt_load();
 void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags);
 void idt_install();
+
+#endif

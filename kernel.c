@@ -1,5 +1,6 @@
 #include "gdt.h"
 #include "idt.h"
+#include "isrs.h"
 #include "term.h"
 
 #if defined(__linux__)
@@ -10,8 +11,14 @@ void kernel_main()
 {
 	gdt_install();
 	idt_install();
-	//~ terminal_initialize();
-	//~ 
+	isrs_install();
+	terminal_initialize();
+	
+	
+	
+	//~ int i = 2/0;
+	//~ terminal_putchar(i);
+	
 	//~ terminal_writestring("Hello, kernel world\n");
 	//~ 
 	//~ while (1)
@@ -26,6 +33,4 @@ void kernel_main()
 	//~ }
 	//~ terminal_writestring("Hello, kernel world\n");
 	//~ terminal_writestring("haha\b\t\rbaba");
-	//~ char *ptr = 0;
-	//~ terminal_putchar(*ptr);
 }

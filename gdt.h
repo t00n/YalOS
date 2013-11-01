@@ -1,3 +1,6 @@
+#ifndef __GDT_H
+#define __GDT_H
+
 struct gdt_entry
 {
 	unsigned short limit_low;
@@ -20,3 +23,5 @@ struct gdt_ptr gp;
 extern void gdt_flush();
 void gdt_install();
 void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
+
+#endif
