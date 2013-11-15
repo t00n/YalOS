@@ -14,8 +14,11 @@ void kernel_main()
 	idt_install();
 	isrs_install();
 	irq_install();
+	__asm__ __volatile__ ("sti"); 
 	terminal_initialize();
 	
+	
+	//~ terminal_putchar(2/0);
 	
 	
 	//~ int i = 2/0;
