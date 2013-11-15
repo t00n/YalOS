@@ -1,6 +1,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "isrs.h"
+#include "irq.h"
 #include "term.h"
 
 #if defined(__linux__)
@@ -12,6 +13,7 @@ void kernel_main()
 	gdt_install();
 	idt_install();
 	isrs_install();
+	irq_install();
 	terminal_initialize();
 	
 	
