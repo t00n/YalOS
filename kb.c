@@ -12,36 +12,36 @@ unsigned char kbdus[128] =
   '\t',			/* Tab */
   'q', 'w', 'e', 'r',	/* 19 */
   't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
-    65,			/* 29   - Control */
+    1,			/* 29   - Control */
   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'y', '`',   66,		/* Left shift */
+ '\'y', '`',   2,		/* Left shift */
  '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-  'm', ',', '.', '/',   67,				/* Right shift */
+  'm', ',', '.', '/',   3,				/* Right shift */
   '*',
-    68,	/* Alt */
+    4,	/* Alt */
   ' ',	/* Space bar */
-    69,	/* Caps lock */
-    70,	/* 59 - F1 key ... > */
-    71,   72,   73,   74,   75,   76,   77,   78,
-    79,	/* < ... F10 */
-    70,	/* 69 - Num lock*/
-    71,	/* Scroll Lock */
-    72,	/* Home key */
-    73,	/* Up Arrow */
-    74,	/* Page Up */
+    5,	/* Caps lock */
+    65,	/* 59 - F1 key ... > */
+    66,   67,   68,   69,   70,   71,   72,   73,
+    74,	/* < ... F10 */
+    6,	/* 69 - Num lock*/
+    7,	/* Scroll Lock */
+    77,	/* Home key */
+    83,	/* Up Arrow */
+    78,	/* Page Up */
   '-',
-    75,	/* Left Arrow */
-    76,
-    77,	/* Right Arrow */
+    84,	/* Left Arrow */
+    0,
+    85,	/* Right Arrow */
   '+',
-    78,	/* 79 - End key*/
-    79,	/* Down Arrow */
+    79,	/* 79 - End key*/
+    86,	/* Down Arrow */
     80,	/* Page Down */
     81,	/* Insert Key */
     82,	/* Delete Key */
-    83,   0,   0,
-    84,	/* F11 Key */
-    85,	/* F12 Key */
+    0,   0,   0,
+    75,	/* F11 Key */
+    76,	/* F12 Key */
     0,	/* All other keys are undefined */
 };
 
@@ -58,6 +58,7 @@ void keyboard_handler(struct regs *r)
     *  set, that means that a key has just been released */
     if (scancode & 0x80)
     {
+		
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
     }

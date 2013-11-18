@@ -15,6 +15,8 @@ struct keystatus {
 };
 
 unsigned char kbdus[128];
+struct keystatus keypressed;
+
 void keyboard_handler(struct regs *r);
 void keyboard_install();
 
