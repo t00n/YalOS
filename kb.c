@@ -5,7 +5,7 @@
 *  comments in to give you an idea of what key is what, even
 *  though I set it's array index to 0. You can change that to
 *  whatever you want using a macro, if you wish! */
-unsigned char kbdus[128] =
+unsigned char kbdus[256] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
   '9', '0', '-', '=', '\b',	/* Backspace */
@@ -14,10 +14,10 @@ unsigned char kbdus[128] =
   't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
     1,			/* 29   - Control */
   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
- '\'y', '`',   2,		/* Left shift */
+ '\'', '`'/*(²)*/,   2,		/* Left shift */
  '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
   'm', ',', '.', '/',   3,				/* Right shift */
-  '*',
+  '*'/*printscreen*/,
     4,	/* Alt */
   ' ',	/* Space bar */
     5,	/* Caps lock */
@@ -39,17 +39,19 @@ unsigned char kbdus[128] =
     80,	/* Page Down */
     81,	/* Insert Key */
     82,	/* Delete Key */
-    0,   0,   0,
+    0,   0,   '<',
     75,	/* F11 Key */
     76,	/* F12 Key */
-    0,	/* All other keys are undefined */
+    0,	/* 89 - All other keys are undefined */, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/*128*/, 0,
+    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', /* Digits */
 };
 
 
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
-    unsigned char scancode;
+    unsigned char scancode, key;
+    char offset = 0;
 
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
@@ -58,12 +60,60 @@ void keyboard_handler(struct regs *r)
     *  set, that means that a key has just been released */
     if (scancode & 0x80)
     {
-		
+		key = kbdus[scancode & 0x7F];
+		switch (key)
+		{
+			case 1:
+				keys.ctrl = 0;
+				break;
+			case 2:
+				keys.left_shift = 0;
+				break;
+			case 3:
+				keys.right_shift = 0;
+				break;
+			case 4:
+				keys.alt = 0;
+				break;			
+		}
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
     }
     else
     {
+		key = kbdus[scancode];
+		switch (key)
+		{
+			case 1:
+				keys.ctrl = 1;
+				break;
+			case 2:
+				keys.left_shift = 1;
+				break;
+			case 3:
+				keys.right_shift = 1;
+				break;
+			case 4:
+				keys.alt = 1;
+				break;
+			case 5:
+				keys.capslock = !keys.capslock;
+				break;
+			case 6:
+				keys.numlock = !keys.numlock;
+				break;
+			case 7:
+				keys.scrolllock = !keys.scrolllock;
+				break;
+			default:
+				if (keys.left_shift || keys.right_shift || keys.capslock)
+				{
+					offset-=32;
+				}
+				terminal_putchar(kbdus[scancode]+offset);
+				break;
+				
+		}
         /* Here, a key was just pressed. Please note that if you
         *  hold a key down, you will get repeated key press
         *  interrupts. */
@@ -76,7 +126,6 @@ void keyboard_handler(struct regs *r)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
-        terminal_putchar(kbdus[scancode]);
     }
 }
 

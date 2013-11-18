@@ -5,17 +5,19 @@
 #include "term.h"
 
 
-struct keystatus {
-	int alt;
+struct keystate {
 	int ctrl;
-	int shift;
+	int left_shift;
+	int right_shift;
+	int alt;
 	int capslock;
 	int numlock;
 	int scrolllock;
+	char keychar;
 };
 
-unsigned char kbdus[128];
-struct keystatus keypressed;
+unsigned char kbdus[256];
+struct keystate keys;
 
 void keyboard_handler(struct regs *r);
 void keyboard_install();
