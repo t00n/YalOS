@@ -80,6 +80,7 @@ void isrs_install()
 *  happening and messing up kernel data structures */
 void fault_handler(struct regs *r)
 {
+	terminal_putchar(r->int_no);
     /* Is this a fault whose number is from 0 to 31? */
     if (r->int_no < 32)
     {

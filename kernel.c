@@ -3,6 +3,7 @@
 #include "isrs.h"
 #include "irq.h"
 #include "term.h"
+#include "kb.h"
 
 #if defined(__linux__)
 #error "Not using cross-compiler"
@@ -14,9 +15,11 @@ void kernel_main()
 	idt_install();
 	isrs_install();
 	irq_install();
+	keyboard_install();
 	__asm__ __volatile__ ("sti"); 
 	terminal_initialize();
 	
+	while(true) {}
 	
 	//~ terminal_putchar(2/0);
 	
