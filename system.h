@@ -14,9 +14,6 @@ extern unsigned char *memset(unsigned char *dest, unsigned char val, int count);
 // Assign val 16-bit to dest[count] in memory
 extern unsigned short *memsetw(unsigned short *dest, unsigned short val, int count);
 
-// Return length of str
-extern size_t strlen(const char *str);
-
 // Get 1 byte from I/O device
 extern unsigned char inportb (unsigned short _port);
 

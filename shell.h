@@ -7,7 +7,7 @@
 
 char shell_buffer[SHELL_WIDTH];
 size_t shell_index;
-int shell_wait;
+bool shell_wait;
 void** shell_cmd;
 
 void shell_char(char c);

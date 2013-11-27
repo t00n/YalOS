@@ -2,7 +2,7 @@
 
 void shell_init()
 {
-	shell_wait = 1;
+	shell_wait = true;
 	shell_index = 0;
 	memset((unsigned char*)shell_buffer, 0, SHELL_WIDTH);
 	term_putc('>');
@@ -12,7 +12,7 @@ void shell_loop()
 {
 	while (true)
 	{
-		if (shell_wait == 1)
+		if (shell_wait == true)
 		{
 			term_scroll();
 		}
@@ -27,7 +27,7 @@ void shell_char(char c)
 {
 	if (c == '\n')
 	{
-		shell_wait = 0;
+		shell_wait = false;
 		term_putc(c);
 	}
 	else if (c == '\b')

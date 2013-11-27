@@ -2,6 +2,7 @@
 #define __TERM_H
 
 #include "system.h"
+#include "string.h"
 
 enum vga_color
 {

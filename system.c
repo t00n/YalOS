@@ -27,14 +27,6 @@ unsigned short *memsetw(unsigned short *dest, unsigned short val, int count)
 	return dest;
 }
 
-size_t strlen(const char* str)
-{
-	size_t ret = 0;
-	while ( str[ret] != 0 )
-		ret++;
-	return ret;
-}
-
 /* We will use this later on for reading from the I/O ports to get data
 *  from devices such as the keyboard. We are using what is called
 *  'inline assembly' in these routines to actually do the work */
