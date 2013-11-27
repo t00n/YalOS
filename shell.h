@@ -8,10 +8,12 @@
 char shell_buffer[SHELL_WIDTH];
 size_t shell_index;
 bool shell_wait;
+bool shell_quit;
 void** shell_cmd;
 
 void shell_char(char c);
 void shell_loop();
 void shell_init();
+void shell_exec();
 
 #endif

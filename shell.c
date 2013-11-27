@@ -1,5 +1,7 @@
 #include "shell.h"
 
+bool shell_quit = false;
+
 void shell_init()
 {
 	shell_wait = true;
@@ -10,7 +12,7 @@ void shell_init()
 
 void shell_loop()
 {
-	while (true)
+	while (shell_quit == false)
 	{
 		if (shell_wait == true)
 		{
@@ -18,6 +20,7 @@ void shell_loop()
 		}
 		else
 		{
+			shell_exec();
 			shell_init();
 		}
 	}
@@ -44,5 +47,13 @@ void shell_char(char c)
 		shell_buffer[shell_index] = c;
 		++shell_index;
 		term_putc(c);
+	}
+}
+
+void shell_exec()
+{
+	if (strdiff(shell_buffer, "reboot") == 0)
+	{
+		outportb(0x64, 0xFE);
 	}
 }
