@@ -22,6 +22,8 @@ void kernel_main()
 	__asm__ __volatile__ ("sti"); 
 	term_init();
 	shell_init();
+	
+	term_putc(strcmp("hahajj","hajha")+48);
 		
 	shell_loop();	
 }

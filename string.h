@@ -4,7 +4,9 @@
 
 // Return length of str
 size_t strlen(const char *str);
-int strcmp(const char* s1, const char* s2);
+
+// Return number of differences between 2 strings
+int strdiff(const char* s1, const char* s2);
 
 
 #endif
