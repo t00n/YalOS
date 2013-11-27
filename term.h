@@ -35,6 +35,7 @@ uint8_t term_mkcolor(enum vga_color fg, enum vga_color bg);
 uint16_t term_mkentry(char c, uint8_t color);
 
 void term_init();
+void term_setpos(size_t col, size_t row);
 
 void term_putc(char c);
 void term_puts(const char* data);

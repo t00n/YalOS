@@ -21,6 +21,16 @@ void term_init()
 	term_clr();
 }
 
+void term_setpos(size_t col, size_t row)
+{
+	if (col >= 0 && col < TERM_WIDTH && row >= 0 && row < TERM_HEIGHT)
+	{
+		term_row = row;
+		term_column = col;
+		term_mvcrs();
+	}
+}
+
 void term_clr()
 {
 	memsetw(term_buffer, term_mkentry(' ', term_color), TERM_HEIGHT*TERM_WIDTH);
