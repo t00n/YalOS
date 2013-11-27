@@ -26,23 +26,23 @@ enum vga_color
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
  
-size_t terminal_row;
-size_t terminal_column;
-uint8_t terminal_color;
-uint16_t* terminal_buffer;
+size_t term_row;
+size_t term_column;
+uint8_t term_color;
+uint16_t* term_buffer;
 
-uint8_t make_color(enum vga_color fg, enum vga_color bg);
-uint16_t make_vgaentry(char c, uint8_t color);
+uint8_t term_mkcolor(enum vga_color fg, enum vga_color bg);
+uint16_t term_mkentry(char c, uint8_t color);
 
-void terminal_initialize();
+void term_init();
 
-void terminal_putchar(char c);
-void terminal_writestring(const char* data);
-void terminal_newline();
-void terminal_clear_line(size_t l);
-void terminal_clear();
+void term_putc(char c);
+void term_puts(const char* data);
+void term_newline();
+void term_clr_line(size_t l);
+void term_clr();
 
-void terminal_scroll();
-void terminal_move_cursor();
+void term_scroll();
+void term_mvcrs();
 
 #endif // __TERM_H

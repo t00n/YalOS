@@ -2,7 +2,6 @@
 #define __KB_H
 
 #include "irq.h"
-#include "term.h"
 #include "shell.h"
 
 

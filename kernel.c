@@ -20,19 +20,19 @@ void kernel_main()
 	keyboard_install();
 	timer_install();
 	__asm__ __volatile__ ("sti"); 
-	terminal_initialize();
+	term_init();
 	shell_initialize();
 	shell_loop();
 	
-	while(true) {}
+	//~ while(true) {}
 	
-	//~ terminal_putchar(2/0);
+	//~ term_putc(2/0);
 	
 	
 	//~ int i = 2/0;
-	//~ terminal_putchar(i);
+	//~ term_putc(i);
 	
-	//~ terminal_writestring("Hello, kernel world\n");
+	//~ term_puts("Hello, kernel world\n");
 	//~ 
 	//~ while (1)
 	//~ {
@@ -41,9 +41,9 @@ void kernel_main()
 	
 	//~ for (char c = 48; c < 73; ++c)
 	//~ {
-		//~ terminal_putchar(c);
-		//~ terminal_putchar('\n');
+		//~ term_putc(c);
+		//~ term_putc('\n');
 	//~ }
-	//~ terminal_writestring("Hello, kernel world\n");
-	//~ terminal_writestring("haha\b\t\rbaba");
+	//~ term_puts("Hello, kernel world\n");
+	//~ term_puts("haha\b\t\rbaba");
 }

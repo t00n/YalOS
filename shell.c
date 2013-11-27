@@ -13,12 +13,12 @@ void shell_loop()
 	{
 		if (shell_wait == 1)
 		{
-			terminal_move_cursor();
+			term_mvcrs();
 		}
 		else
 		{
-			terminal_writestring("cmd ok\n");
-			terminal_putchar('>');
+			term_puts("cmd ok\n");
+			term_putc('>');
 			shell_wait = 1;
 		}
 		//~ shell_wait = 1;			
@@ -31,11 +31,5 @@ void shell_char(unsigned char c)
 	{
 		shell_wait = 0;
 	}
-	terminal_putchar(c);
+	term_putc(c);
 }
-
-//~ void shell_input(char* s, size_t l)
-//~ {
-	//~ memcpy(shell_buffer, s, l);
-	//~ shell_wait = 0;
-//~ }
