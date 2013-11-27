@@ -1,8 +1,9 @@
 #include "shell.h"
 
 int shell_wait = 1;
+int shell_index = 0;
 
-void shell_initialize()
+void shell_init()
 {
 	memset(shell_buffer, 0, 80);
 }
@@ -13,6 +14,7 @@ void shell_loop()
 	{
 		if (shell_wait == 1)
 		{
+			term_scroll();
 			term_mvcrs();
 		}
 		else

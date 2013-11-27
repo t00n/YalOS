@@ -14,8 +14,6 @@ uint16_t term_mkentry(char c, uint8_t color)
  
 void term_init()
 {
-	term_row = 0;
-	term_column = 0;
 	term_color = term_mkcolor(COLOR_LIGHT_GREY, COLOR_BLACK);
 	term_buffer = (uint16_t*) 0xB8000;
 	term_clr();
@@ -23,7 +21,7 @@ void term_init()
 
 void term_setpos(size_t col, size_t row)
 {
-	if (col >= 0 && col < TERM_WIDTH && row >= 0 && row < TERM_HEIGHT)
+	if (col < TERM_WIDTH && row < TERM_HEIGHT)
 	{
 		term_row = row;
 		term_column = col;
@@ -34,13 +32,16 @@ void term_setpos(size_t col, size_t row)
 void term_clr()
 {
 	memsetw(term_buffer, term_mkentry(' ', term_color), TERM_HEIGHT*TERM_WIDTH);
-	term_mvcrs();
+	term_setpos(0,0);
 }
 
 void term_clrr(size_t row)
 {
-	memsetw(term_buffer+row*TERM_WIDTH, term_mkentry(' ', term_color), TERM_WIDTH);
-	term_mvcrs();
+	if (row < TERM_HEIGHT)
+	{
+		memsetw(term_buffer+row*TERM_WIDTH, term_mkentry(' ', term_color), TERM_WIDTH);
+		term_setpos(row, 0);
+	}
 }
  
 void term_putc(char c)
@@ -84,6 +85,13 @@ void term_putc(char c)
 	term_scroll();
 	term_mvcrs();
 }
+ 
+void term_puts(const char* data)
+{
+	size_t datalen = strlen(data);
+	for ( size_t i = 0; i < datalen; i++ )
+		term_putc(data[i]);
+}
 
 void term_putsc(const char* s, uint8_t color)
 {
@@ -91,13 +99,6 @@ void term_putsc(const char* s, uint8_t color)
 	term_color = color;
 	term_puts(s);
 	term_color = old_color;
-}
- 
-void term_puts(const char* data)
-{
-	size_t datalen = strlen(data);
-	for ( size_t i = 0; i < datalen; i++ )
-		term_putc(data[i]);
 }
 
 void term_putnl()
