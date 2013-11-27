@@ -23,15 +23,22 @@ void term_init()
 
 void term_clr()
 {
-	memsetw(term_buffer, term_mkentry(' ', term_color), VGA_HEIGHT*VGA_WIDTH);
+	memsetw(term_buffer, term_mkentry(' ', term_color), TERM_HEIGHT*TERM_WIDTH);
+	term_mvcrs();
+}
+
+void term_clrr(size_t row)
+{
+	memsetw(term_buffer+row*TERM_WIDTH, term_mkentry(' ', term_color), TERM_WIDTH);
 	term_mvcrs();
 }
  
 void term_putc(char c)
 {
+	const size_t index = term_row * TERM_WIDTH + term_column;
 	if (c == '\n')
 	{
-		term_newline();
+		term_putnl();
 	}
 	else if (c == '\r')
 	{
@@ -41,7 +48,7 @@ void term_putc(char c)
     *  to a point that will make it divisible by 8 */
     else if(c == '\t')
     {
-        term_column = (term_column + 8) & ~(8 - 1);
+        term_column = (term_column + 4) & ~(4 - 1);
     }
 	else if (c == '\b')
 	{
@@ -54,20 +61,26 @@ void term_putc(char c)
 			if (term_row > 0)
 			{
 				--term_row;
-				term_column = VGA_WIDTH - 1;
+				term_column = TERM_WIDTH - 1;
 			}		
 		}
-		size_t index = term_row*VGA_WIDTH + term_column;
 		term_buffer[index] = term_mkentry(' ', term_color);
 	}
 	else
 	{
-		const size_t index = term_row * VGA_WIDTH + term_column;
 		term_buffer[index] = term_mkentry(c, term_color);
 		++term_column;
 	}
 	term_scroll();
 	term_mvcrs();
+}
+
+void term_putsc(const char* s, uint8_t color)
+{
+	uint8_t old_color = term_color;
+	term_color = color;
+	term_puts(s);
+	term_color = old_color;
 }
  
 void term_puts(const char* data)
@@ -77,9 +90,15 @@ void term_puts(const char* data)
 		term_putc(data[i]);
 }
 
+void term_putnl()
+{
+	term_column = 0;
+	++term_row;	
+}
+
 void term_mvcrs()
 {
-	size_t index = term_row * VGA_WIDTH + term_column;
+	size_t index = term_row * TERM_WIDTH + term_column;
     outportb(0x3D4, 14);
     outportb(0x3D5, index >> 8);
     outportb(0x3D4, 15);
@@ -88,22 +107,16 @@ void term_mvcrs()
 
 void term_scroll()
 {
-	if ( term_column == VGA_WIDTH )
+	if ( term_column == TERM_WIDTH )
 	{
-		term_newline();
+		term_putnl();
 	}	
-	if ( term_row == VGA_HEIGHT )
+	if ( term_row == TERM_HEIGHT )
 	{
 		// move buffer one line up
-		memcpy((unsigned char *)term_buffer, (unsigned char *) term_buffer+VGA_WIDTH*2, (VGA_HEIGHT-1)*VGA_WIDTH*2);
+		memcpy((unsigned char *)term_buffer, (unsigned char *) term_buffer+TERM_WIDTH*2, (TERM_HEIGHT-1)*TERM_WIDTH*2);
 		--term_row;
 		// clean last line
-        memsetw (term_buffer + (VGA_HEIGHT-1) * VGA_WIDTH, term_mkentry(' ', term_color), VGA_WIDTH);
+        memsetw (term_buffer + (TERM_HEIGHT-1) * TERM_WIDTH, term_mkentry(' ', term_color), TERM_WIDTH);
 	}
-}
-
-void term_newline()
-{
-	term_column = 0;
-	++term_row;	
 }

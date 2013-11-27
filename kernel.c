@@ -22,6 +22,8 @@ void kernel_main()
 	__asm__ __volatile__ ("sti"); 
 	term_init();
 	shell_initialize();
+	
+	
 	shell_loop();
 	
 	//~ while(true) {}

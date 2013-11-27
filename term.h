@@ -23,8 +23,8 @@ enum vga_color
 	COLOR_WHITE = 15,
 };
  
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
+static const size_t TERM_WIDTH = 80;
+static const size_t TERM_HEIGHT = 25;
  
 size_t term_row;
 size_t term_column;
@@ -38,8 +38,8 @@ void term_init();
 
 void term_putc(char c);
 void term_puts(const char* data);
-void term_newline();
-void term_clr_line(size_t l);
+void term_putsc(const char* s, uint8_t color);
+void term_putnl();
 void term_clr();
 
 void term_scroll();
