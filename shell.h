@@ -6,6 +6,7 @@
 unsigned char shell_buffer[80];
 int shell_index;
 int shell_wait;
+void** shell_cmd;
 
 void shell_char(unsigned char c);
 void shell_loop();

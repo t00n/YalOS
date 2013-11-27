@@ -46,7 +46,6 @@ void term_clrr(size_t row)
  
 void term_putc(char c)
 {
-	const size_t index = term_row * TERM_WIDTH + term_column;
 	if (c == '\n')
 	{
 		term_putnl();
@@ -75,10 +74,12 @@ void term_putc(char c)
 				term_column = TERM_WIDTH - 1;
 			}		
 		}
+		const size_t index = term_row * TERM_WIDTH + term_column;
 		term_buffer[index] = term_mkentry(' ', term_color);
 	}
 	else
 	{
+		const size_t index = term_row * TERM_WIDTH + term_column;
 		term_buffer[index] = term_mkentry(c, term_color);
 		++term_column;
 	}
