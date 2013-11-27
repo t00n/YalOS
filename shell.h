@@ -3,7 +3,7 @@
 #include "kb.h"
 #include "term.h"
 
-#define SHELL_WIDTH 78
+#define SHELL_WIDTH 79
 
 char shell_buffer[SHELL_WIDTH];
 size_t shell_index;
