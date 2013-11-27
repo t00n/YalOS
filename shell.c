@@ -4,7 +4,7 @@ void shell_init()
 {
 	shell_wait = 1;
 	shell_index = 0;
-	memset(shell_buffer, 0, 80);
+	memset((unsigned char*)shell_buffer, 0, SHELL_WIDTH);
 	term_putc('>');
 }
 
@@ -18,28 +18,31 @@ void shell_loop()
 		}
 		else
 		{
-			term_puts(shell_buffer); // out
-			term_putc('\n');
 			shell_init();
 		}
 	}
 }
 
-void shell_char(unsigned char c)
+void shell_char(char c)
 {
-	term_putc(c);
 	if (c == '\n')
 	{
 		shell_wait = 0;
+		term_putc(c);
 	}
 	else if (c == '\b')
 	{
-		--shell_index;
-		shell_buffer[shell_index] = 0;
+		if (shell_index > 0)
+		{
+			--shell_index;
+			shell_buffer[shell_index] = 0;
+			term_putc(c);
+		}
 	}
-	else
+	else if (shell_index < SHELL_WIDTH)
 	{
 		shell_buffer[shell_index] = c;
 		++shell_index;
+		term_putc(c);
 	}
 }
