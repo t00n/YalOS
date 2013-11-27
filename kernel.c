@@ -23,7 +23,6 @@ void kernel_main()
 	term_init();
 	shell_init();
 	
-	term_putc(strcmp("hahajj","hajha")+48);
 		
 	shell_loop();	
 }
