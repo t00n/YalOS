@@ -16,7 +16,7 @@ void shell_loop()
 	{
 		if (shell_wait == true)
 		{
-			term_scroll();
+			shell_wait = true;
 		}
 		else
 		{
@@ -26,27 +26,27 @@ void shell_loop()
 	}
 }
 
-void shell_char(char c)
+void shell_char(struct keystate keys)
 {
-	if (c == '\n')
+	if (keys.keychar == '\n')
 	{
 		shell_wait = false;
-		term_putc(c);
+		term_putc(keys.keychar);
 	}
-	else if (c == '\b')
+	else if (keys.keychar == '\b')
 	{
 		if (shell_index > 0)
 		{
 			--shell_index;
 			shell_buffer[shell_index] = 0;
-			term_putc(c);
+			term_putc(keys.keychar);
 		}
 	}
 	else if (shell_index < SHELL_WIDTH)
 	{
-		shell_buffer[shell_index] = c;
+		shell_buffer[shell_index] = keys.keychar;
 		++shell_index;
-		term_putc(c);
+		term_putc(keys.keychar);
 	}
 }
 

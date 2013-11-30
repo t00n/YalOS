@@ -1,11 +1,12 @@
 #include "kb.h"
 
+struct keystate keys;
 /* KBDUS means US Keyboard Layout. This is a scancode table
 *  used to layout a standard US keyboard. I have left some
 *  comments in to give you an idea of what key is what, even
 *  though I set it's array index to 0. You can change that to
 *  whatever you want using a macro, if you wish! */
-unsigned char kbdus[256] =
+char kbdus[256] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
   '9', '0', '-', '=', '\b',	/* Backspace */
@@ -50,17 +51,17 @@ unsigned char kbdus[256] =
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
-    unsigned char scancode, key;
+    unsigned char scancode;
 
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
 
+	keys.keychar = kbdus[scancode & 0x7F];
     /* If the top bit of the byte we read from the keyboard is
     *  set, that means that a key has just been released */
     if (scancode & 0x80)
     {
-		key = kbdus[scancode & 0x7F];
-		switch (key)
+		switch (keys.keychar)
 		{
 			case 1:
 				keys.ctrl = 0;
@@ -80,8 +81,7 @@ void keyboard_handler(struct regs *r)
     }
     else
     {
-		key = kbdus[scancode];
-		switch (key)
+		switch (keys.keychar)
 		{
 			case CTRL:
 				keys.ctrl = 1;
@@ -107,9 +107,9 @@ void keyboard_handler(struct regs *r)
 			default:
 				if (keys.left_shift || keys.right_shift || keys.capslock)
 				{
-					key = kbdus[scancode+128];
+					keys.keychar = kbdus[scancode+128];
 				}
-				shell_char(key);
+				shell_char(keys);
 				break;
 				
 		}

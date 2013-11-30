@@ -11,7 +11,9 @@ bool shell_wait;
 bool shell_quit;
 void** shell_cmd;
 
-void shell_char(char c);
+struct keystate;
+
+void shell_char(struct keystate keys);
 void shell_loop();
 void shell_init();
 void shell_exec();

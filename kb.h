@@ -49,7 +49,7 @@ enum keybinding {
 	ARROW_DOWN = 86
 };
 
-unsigned char kbdus[256];
+char kbdus[256];
 struct keystate keys;
 
 void keyboard_handler(struct regs *r);
