@@ -20,7 +20,7 @@ void shell_loop()
 		}
 		else
 		{
-			shell_exec();
+			shell_parse();
 			shell_init();
 		}
 	}
@@ -50,7 +50,7 @@ void shell_char(struct keystate keys)
 	}
 }
 
-void shell_exec()
+void shell_parse()
 {
 	if (strdiff(shell_buffer, "reboot") == 0)
 	{

@@ -16,6 +16,6 @@ struct keystate;
 void shell_char(struct keystate keys);
 void shell_loop();
 void shell_init();
-void shell_exec();
+void shell_parse();
 
 #endif
