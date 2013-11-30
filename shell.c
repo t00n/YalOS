@@ -1,9 +1,17 @@
 #include "shell.h"
 
 bool shell_quit = false;
+struct shell_command shell_cmd[10];
+
+void reboot()
+{
+	outportb(0x64, 0xFE);	
+}
 
 void shell_init()
 {
+	shell_cmd[0].name = "reboot";
+	shell_cmd[0].function = &reboot;
 	shell_wait_cmd();
 }
 
@@ -57,8 +65,8 @@ void shell_char(struct keystate keys)
 
 void shell_parse()
 {
-	if (strdiff(shell_buffer, "reboot") == 0)
+	if (strdiff(shell_buffer, shell_cmd[0].name) == 0)
 	{
-		outportb(0x64, 0xFE);
+		shell_cmd[0].function();
 	}
 }
