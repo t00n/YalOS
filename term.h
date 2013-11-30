@@ -43,6 +43,7 @@ void term_puts(const char* data);
 void term_putsc(const char* s, uint8_t color);
 void term_putnl();
 void term_clr();
+void term_clrr(size_t row);
 
 void term_scroll();
 void term_mvcrs();
