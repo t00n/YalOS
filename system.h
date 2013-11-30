@@ -5,6 +5,8 @@
 #include <stddef.h> // size_t
 #include <stdint.h>
 
+extern void shutdown();
+
 // Copy from src to dest in memory
 extern unsigned char *memcpy(unsigned char *dest, const unsigned char *src, int count);
 
