@@ -2,7 +2,7 @@
 
 bool shell_quit = false;
 
-void shell_init()
+void shell_wait_cmd()
 {
 	shell_wait = true;
 	shell_index = 0;
@@ -21,7 +21,7 @@ void shell_loop()
 		else
 		{
 			shell_parse();
-			shell_init();
+			shell_wait_cmd();
 		}
 	}
 }

@@ -21,7 +21,7 @@ void kernel_main()
 	timer_install();
 	__asm__ __volatile__ ("sti"); 
 	term_init();
-	shell_init();
+	shell_wait_cmd();
 		
 	shell_loop();	
 }
