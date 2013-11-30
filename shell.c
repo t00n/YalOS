@@ -2,6 +2,11 @@
 
 bool shell_quit = false;
 
+void shell_init()
+{
+	shell_wait_cmd();
+}
+
 void shell_wait_cmd()
 {
 	shell_wait = true;
