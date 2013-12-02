@@ -39,32 +39,6 @@ _start:
 .hang:
 	hlt
 	jmp .hang
-
-APM_Missing:
-interfaceFailed:
-ret
-
-global shutdown
-shutdown:
-mov ax, 5300h ; check for existance of APM
-mov bx, 0
-int 15h ; returns version in AL and AH
-jc APM_Missing
-
-; open an interface with APM
-mov ax, 5301h
-mov bx, 0
-mov cx, 0
-int 15h
-jc interfaceFailed
-
-; do a power off
-mov ax, 5307h
-mov cx, 3
-mov bx, 1
-int 15h
-
-
 	
 ; This will set up our new segment registers. We need to do
 ; something special in order to set CS. We do what is called a

@@ -65,8 +65,11 @@ void shell_char(struct keystate keys)
 
 void shell_parse()
 {
-	if (strdiff(shell_buffer, shell_cmd[0].name) == 0)
+	for (int i = 0; i < 10; ++i)
 	{
-		shell_cmd[0].function();
+		if (strdiff(shell_buffer, shell_cmd[i].name) == 0)
+		{
+			shell_cmd[i].function();
+		}
 	}
 }
