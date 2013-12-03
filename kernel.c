@@ -31,13 +31,11 @@ void kernel_main()
 	//~ {
 		//~ term_puts(retest[i]);
 	//~ }
-	char* test = malloc(5);
-	test[0]='0';
-	test[1]='1';
-	test[2]='2';
-	test[3]='3';
-	test[4]='4';
-	term_putc(test);
+	for (int i = 0; i < 40; ++i)
+	{
+		char* t = malloc(i);
+		memset(t, i, i);
+	}
 		
 	shell_loop();	
 }

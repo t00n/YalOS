@@ -14,7 +14,7 @@ struct mem_blk
 	struct mem_blk* next;
 };
 
-struct mem_blk memory;
+struct mem_blk* memory;
 
 
 void* malloc(size_t size);
