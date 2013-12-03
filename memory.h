@@ -19,4 +19,25 @@ struct mem_blk* memory;
 void mem_init();
 void* malloc(size_t size);
 
+/*
+#define MEM_BLK_SIZE 0x1000 // 4k
+#define MEM_BLK_LIST MEM_BLK_SIZE*0x1000 // 4k blk = 16Mo
+#define MEM_START 0x2000 // 8k blk = 32Mo
+#define MEM_SIZE 0x100000 // 1M blk = 4Go
+
+struct mem_blk // 16o
+{
+	void* ptr;
+	bool free;
+	struct mem_blk* next;
+	uint32_t fill;
+};
+
+struct mem_blk* memory;
+
+void mem_init();
+void* malloc(size_t size);
+void free(void* ptr);
+*/
+
 #endif
