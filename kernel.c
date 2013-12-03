@@ -22,6 +22,13 @@ void kernel_main()
 	__asm__ __volatile__ ("sti"); 
 	term_init();
 	shell_init();
+	
+	//~ char test[10] = "haha hhehe hihi hoho ";
+	//~ char retest[10][10] = strsplit(test, ' ');
+	//~ for (int i = 0; i < 6; ++i)
+	//~ {
+		//~ term_puts(retest[i]);
+	//~ }
 		
 	shell_loop();	
 }

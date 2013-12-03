@@ -46,3 +46,26 @@ int strcmp(const char* s1, const char* s2)
 	}
 	return i;
 }
+
+//~ char** strsplit(const char* s, char limit)
+//~ {
+	//~ char storage[10];
+	//~ int count = 0;
+	//~ char ret[10][10];
+	//~ for (int i = 0; s[i] != 0; ++i)
+	//~ {
+		//~ if (s[i] == limit)
+		//~ {
+			//~ ret[count] = storage;
+			//~ ++count;
+			//~ i = 0;
+			//~ term_puts(storage);
+		//~ }
+		//~ else
+		//~ {
+			//~ storage[i] = s[i];
+		//~ }
+	//~ }
+	//~ ret[count] = storage;
+	//~ return ret;
+//~ }

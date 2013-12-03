@@ -65,11 +65,17 @@ void shell_char(struct keystate keys)
 
 void shell_parse()
 {
+	bool done = false;
 	for (int i = 0; i < 10; ++i)
 	{
 		if (strdiff(shell_buffer, shell_cmd[i].name) == 0)
 		{
 			shell_cmd[i].function();
+			done = true;
 		}
+	}
+	if (! done)
+	{
+		term_puts("Unknown command\n");
 	}
 }
