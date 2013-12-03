@@ -6,6 +6,7 @@
 #include "kb.h"
 #include "timer.h"
 #include "shell.h"
+#include "memory.h"
 
 #if defined(__linux__)
 #error "Not using cross-compiler"
@@ -22,6 +23,7 @@ void kernel_main()
 	__asm__ __volatile__ ("sti"); 
 	term_init();
 	shell_init();
+	mem_init();
 	
 	//~ char test[10] = "haha hhehe hihi hoho ";
 	//~ char retest[10][10] = strsplit(test, ' ');
@@ -29,6 +31,8 @@ void kernel_main()
 	//~ {
 		//~ term_puts(retest[i]);
 	//~ }
+	void* test = malloc(5);
+	term_puts(test);
 		
 	shell_loop();	
 }
