@@ -47,25 +47,31 @@ int strcmp(const char* s1, const char* s2)
 	return i;
 }
 
-//~ char** strsplit(const char* s, char limit)
-//~ {
-	//~ char storage[10];
-	//~ int count = 0;
-	//~ char ret[10][10];
-	//~ for (int i = 0; s[i] != 0; ++i)
-	//~ {
-		//~ if (s[i] == limit)
-		//~ {
-			//~ ret[count] = storage;
-			//~ ++count;
-			//~ i = 0;
-			//~ term_puts(storage);
-		//~ }
-		//~ else
-		//~ {
-			//~ storage[i] = s[i];
-		//~ }
-	//~ }
-	//~ ret[count] = storage;
-	//~ return ret;
-//~ }
+char** strsplit(const char* s, char limit)
+{
+	int count = 0;
+	char** ret = malloc(sizeof(char*)*10);
+	char* storage = malloc(sizeof(char)*10);
+	int storage_i = 0;
+	int len = strlen(s);
+	for (int i = 0; i < len; ++i)
+	{
+		if (s[i] == limit)
+		{
+			if (strlen(storage) > 0)
+			{
+				ret[count] = storage;
+				++count;
+				storage = malloc(sizeof(char)*10);
+				storage_i = 0;
+			}
+		}
+		else
+		{
+			storage[storage_i] = s[i];
+			++storage_i;
+		}
+	}
+	ret[count] = 0;
+	return ret;
+}

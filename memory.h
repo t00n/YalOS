@@ -16,7 +16,7 @@ struct mem_blk
 
 struct mem_blk* memory;
 
-
+void mem_init();
 void* malloc(size_t size);
 
 #endif

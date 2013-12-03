@@ -7,6 +7,7 @@
 #include "timer.h"
 #include "shell.h"
 #include "memory.h"
+#include "string.h"
 
 #if defined(__linux__)
 #error "Not using cross-compiler"
@@ -25,17 +26,12 @@ void kernel_main()
 	shell_init();
 	mem_init();
 	
-	//~ char test[10] = "haha hhehe hihi hoho ";
-	//~ char retest[10][10] = strsplit(test, ' ');
-	//~ for (int i = 0; i < 6; ++i)
-	//~ {
-		//~ term_puts(retest[i]);
-	//~ }
-	for (int i = 0; i < 40; ++i)
+	char** test = strsplit("haha hehe hihi hoho       \0", ' ');
+	for (int i = 0; i < strlen(*test); ++i)
 	{
-		char* t = malloc(i);
-		memset(t, i, i);
+		term_puts(test[i]);
+		term_putc('\n');
 	}
-		
+	
 	shell_loop();	
 }

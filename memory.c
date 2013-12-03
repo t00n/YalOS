@@ -2,10 +2,10 @@
 
 void mem_init()
 {
-	memory = 0x3FFFFF; // 4Mo
+	memory = (struct mem_blk*)0x3FFFFF; // 4Mo
 	memory->free = true;
 	memory->next = NULL;
-	memory->ptr = START_OF_MEMORY;
+	memory->ptr = (struct mem_blk*)START_OF_MEMORY;
 	memory->size = SIZE_OF_MEMORY;
 }
 
