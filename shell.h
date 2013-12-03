@@ -8,7 +8,7 @@
 struct shell_command
 {
 	char* name;
-	void (*function)();
+	void (*function)(int argc, char** argv);
 };
 
 char shell_buffer[SHELL_WIDTH];
