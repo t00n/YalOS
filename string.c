@@ -50,8 +50,8 @@ int strcmp(const char* s1, const char* s2)
 char** strsplit(const char* s, char limit)
 {
 	int count = 0;
-	char** ret = malloc(sizeof(char*)*10);
-	char* storage = malloc(sizeof(char)*10);
+	char** ret = malloc(strlen(s));
+	char* storage = malloc(strlen(s));
 	int storage_i = 0;
 	int len = strlen(s);
 	for (int i = 0; i < len; )
