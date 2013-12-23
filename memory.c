@@ -31,7 +31,10 @@ void* malloc(size_t size)
 	return 0;
 }
 
-/*void mem_init()
+/*TO DO
+ * mem_blk -> mem_ptr
+ * mem_blk -> 4Ko ~ page frame
+ * void mem_init()
 {
 	memory = (struct mem_blk*)MEM_BLK_LIST;
 	memory->free = true;
@@ -39,7 +42,7 @@ void* malloc(size_t size)
 	memory->ptr = (struct mem_blk*)MEM_START;
 }
 
-void* malloc(size_t size)
+void* malloc(size_t size) // = brk(void*)
 {
 	struct mem_blk* mem = memory;
 	while (mem->free = false && mem->next != NULL)

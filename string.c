@@ -54,24 +54,23 @@ char** strsplit(const char* s, char limit)
 	char* storage = malloc(sizeof(char)*10);
 	int storage_i = 0;
 	int len = strlen(s);
-	for (int i = 0; i < len; ++i)
+	for (int i = 0; i < len; )
 	{
-		if (s[i] == limit)
-		{
-			if (strlen(storage) > 0)
-			{
-				ret[count] = storage;
-				++count;
-				storage = malloc(sizeof(char)*10);
-				storage_i = 0;
-			}
-		}
-		else
+		while (s[i] != limit && i < len)
 		{
 			storage[storage_i] = s[i];
 			++storage_i;
+			++i;
+		}
+		while (s[i] == limit && i < len)
+		{ ++i; }
+		if (storage_i > 0)
+		{
+			ret[count] = storage;
+			++count;
+			storage = malloc(sizeof(char)*10);
+			storage_i = 0;
 		}
 	}
-	ret[count] = 0;
 	return ret;
 }

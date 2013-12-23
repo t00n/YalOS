@@ -26,7 +26,7 @@ void kernel_main()
 	shell_init();
 	mem_init();
 	
-	char** test = strsplit("haha hehe hihi hoho       \0", ' ');
+	char** test = strsplit("aa aa a", ' ');
 	for (int i = 0; i < strlen(*test); ++i)
 	{
 		term_puts(test[i]);

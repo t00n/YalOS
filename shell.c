@@ -8,10 +8,22 @@ void reboot(int argc, char** argv)
 	outportb(0x64, 0xFE);	
 }
 
+void echo(int argc, char** argv)
+{
+	int len = argc, i;
+	for (i = 1; i < len; ++i)
+	{
+		term_puts(argv[i]);
+	}
+	term_putnl();
+}
+
 void shell_init()
 {
 	shell_cmd[0].name = "reboot";
 	shell_cmd[0].function = &reboot;
+	shell_cmd[1].name = "echo";
+	shell_cmd[1].function = &echo;
 	shell_wait_cmd();
 }
 
