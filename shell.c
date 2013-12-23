@@ -14,6 +14,7 @@ void echo(int argc, char** argv)
 	for (i = 1; i < len; ++i)
 	{
 		term_puts(argv[i]);
+		term_putc(' ');
 	}
 	term_putnl();
 }
