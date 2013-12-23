@@ -79,12 +79,13 @@ void shell_char(struct keystate keys)
 void shell_parse()
 {
 	bool done = false;
-	char ** parse = strsplit(shell_buffer, ' ');
+	char ** parse = malloc(50);
+	int count = strsplit(shell_buffer, ' ', parse);
 	for (int i = 0; i < 10; ++i)
 	{
 		if (strdiff(parse[0], shell_cmd[i].name) == 0)
 		{
-			shell_cmd[i].function(strlen(*parse), parse);
+			shell_cmd[i].function(count, parse);
 			done = true;
 		}
 	}

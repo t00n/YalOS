@@ -12,6 +12,7 @@ int strdiff(const char* s1, const char* s2);
 // Return index of first difference between 2 strings.
 int strcmp(const char* s1, const char* s2);
 
-char** strsplit(const char* s, char limit);
+// return number of substrings
+int strsplit(const char* s, char limit, char** ret);
 
 #endif
