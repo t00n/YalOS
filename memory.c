@@ -24,7 +24,7 @@ void* malloc(size_t size)
 		mem->next = next;
 		next->next = NULL;
 		next->ptr = mem->ptr+mem->size;
-		next->size = START_OF_MEMORY+SIZE_OF_MEMORY-(int)mem->ptr;
+		next->size = START_OF_MEMORY+SIZE_OF_MEMORY-(int)next->ptr;
 		next->free = true;
 		return mem->ptr;
 	}

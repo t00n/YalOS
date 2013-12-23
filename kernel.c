@@ -26,8 +26,8 @@ void kernel_main()
 	shell_init();
 	mem_init();
 	
-	char** test = strsplit("aa aa a", ' ');
-	for (int i = 0; i < strlen(*test); ++i)
+	char** test = strsplit("   ", '-');
+	for (unsigned int i = 0; i < strlen(*test); ++i)
 	{
 		term_puts(test[i]);
 		term_putc('\n');
