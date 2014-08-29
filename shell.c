@@ -42,7 +42,7 @@ void shell_loop()
 	{
 		if (shell_wait == true)
 		{
-			shell_wait = true;
+			__asm__ __volatile("nop");
 		}
 		else
 		{
