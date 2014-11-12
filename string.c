@@ -75,3 +75,17 @@ int strsplit(const char* s, char limit, char** ret)
 	// ret[count] = storage;
 	// return count;
 }
+
+char* int2str(unsigned int n)
+{
+	char * ret;
+	unsigned int i = 0;
+	while (n > 0)
+	{
+		ret[i] = n%10;
+		n = n/10;
+		++i;
+	}
+	ret[i] = 0;
+	return ret;
+}

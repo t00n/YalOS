@@ -15,4 +15,6 @@ int strcmp(const char* s1, const char* s2);
 // return number of substrings
 int strsplit(const char* s, char limit, char** ret);
 
+char* int2str(unsigned int);
+
 #endif
