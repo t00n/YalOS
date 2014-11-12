@@ -21,6 +21,6 @@ void kernel_main()
 	irq_install();
 	keyboard_install();
 	timer_install();
-	__asm__ __volatile__ ("sti"); 
+	mem_init();
 	vga_init();
 }
