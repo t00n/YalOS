@@ -1,7 +1,7 @@
 #ifndef __SHELL_H
 #define __SHELL_H
 #include "kb.h"
-#include "term.h"
+#include "vga.h"
 
 #define SHELL_WIDTH 79
 

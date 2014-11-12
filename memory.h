@@ -3,41 +3,19 @@
 
 #include "system.h"
 
-#define START_OF_MEMORY 0xFFFFFF // 16-256-4096-64k-1Mo-16Mo
-#define SIZE_OF_MEMORY 0xFFFFFF // 16-256-4096-64k-1Mo-16Mo
 
-struct mem_blk
+typedef struct page_dir_entry
 {
-	void* ptr;
-	size_t size;
-	bool free;
-	struct mem_blk* next;
-};
+	uint16_t first;
+	uint8_t second;
+	uint8_t flags;
+} page_dir_entry;
 
-struct mem_blk* memory;
-
-void mem_init();
-void* malloc(size_t size);
-
-/*
-#define MEM_BLK_SIZE 0x1000 // 4k
-#define MEM_BLK_LIST MEM_BLK_SIZE*0x1000 // 4k blk = 16Mo
-#define MEM_START 0x2000 // 8k blk = 32Mo
-#define MEM_SIZE 0x100000 // 1M blk = 4Go
-
-struct mem_blk // 16o
+typedef struct page_table_entry
 {
-	void* ptr;
-	bool free;
-	struct mem_blk* next;
-	uint32_t fill;
-};
-
-struct mem_blk* memory;
-
-void mem_init();
-void* malloc(size_t size);
-void free(void* ptr);
-*/
+	uint16_t first;
+	uint8_t second;
+	uint8_t flags;
+} page_table_entry;
 
 #endif

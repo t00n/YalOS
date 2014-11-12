@@ -13,10 +13,10 @@ void echo(int argc, char** argv)
 	int len = argc, i;
 	for (i = 1; i < len; ++i)
 	{
-		term_puts(argv[i]);
-		term_putc(' ');
+		vga_puts(argv[i]);
+		vga_putc(' ');
 	}
-	term_putnl();
+	vga_putnl();
 }
 
 void shell_init()
@@ -33,7 +33,7 @@ void shell_wait_cmd()
 	shell_wait = true;
 	shell_index = 0;
 	memset((unsigned char*)shell_buffer, 0, SHELL_WIDTH);
-	term_putc('>');
+	vga_putc('>');
 }
 
 void shell_loop()
@@ -57,7 +57,7 @@ void shell_char(struct keystate keys)
 	if (keys.keychar == '\n')
 	{
 		shell_wait = false;
-		term_putc(keys.keychar);
+		vga_putc(keys.keychar);
 	}
 	else if (keys.keychar == '\b')
 	{
@@ -65,32 +65,32 @@ void shell_char(struct keystate keys)
 		{
 			--shell_index;
 			shell_buffer[shell_index] = 0;
-			term_putc(keys.keychar);
+			vga_putc(keys.keychar);
 		}
 	}
 	else if (shell_index < SHELL_WIDTH)
 	{
 		shell_buffer[shell_index] = keys.keychar;
 		++shell_index;
-		term_putc(keys.keychar);
+		vga_putc(keys.keychar);
 	}
 }
 
 void shell_parse()
 {
-	bool done = false;
-	char ** parse = malloc(50);
-	int count = strsplit(shell_buffer, ' ', parse);
-	for (int i = 0; i < 10; ++i)
-	{
-		if (strdiff(parse[0], shell_cmd[i].name) == 0)
-		{
-			shell_cmd[i].function(count, parse);
-			done = true;
-		}
-	}
-	if (! done)
-	{
-		term_puts("Unknown command\n");
-	}
+	// bool done = false;
+	// char ** parse = malloc(50);
+	// int count = strsplit(shell_buffer, ' ', parse);
+	// for (int i = 0; i < 10; ++i)
+	// {
+	// 	if (strdiff(parse[0], shell_cmd[i].name) == 0)
+	// 	{
+	// 		shell_cmd[i].function(count, parse);
+	// 		done = true;
+	// 	}
+	// }
+	// if (! done)
+	// {
+	// 	vga_puts("Unknown command\n");
+	// }
 }

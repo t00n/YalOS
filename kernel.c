@@ -2,7 +2,7 @@
 #include "idt.h"
 #include "isrs.h"
 #include "irq.h"
-#include "term.h"
+#include "vga.h"
 #include "kb.h"
 #include "timer.h"
 #include "shell.h"
@@ -22,17 +22,5 @@ void kernel_main()
 	keyboard_install();
 	timer_install();
 	__asm__ __volatile__ ("sti"); 
-	term_init();
-	shell_init();
-	mem_init();
-	
-	char** test = malloc(50);
-	int count = strsplit("   ", '-', test);
-	for (unsigned int i = 0; i < count; ++i)
-	{
-		term_puts(test[i]);
-		term_putc('\n');
-	}
-	
-	shell_loop();	
+	vga_init();
 }

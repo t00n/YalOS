@@ -2,7 +2,7 @@
 #define __ISRS_H
 
 #include "idt.h"
-#include "term.h"
+#include "vga.h"
 
 /* This defines what the stack looks like after an ISR was running */
 struct regs

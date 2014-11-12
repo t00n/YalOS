@@ -49,29 +49,29 @@ int strcmp(const char* s1, const char* s2)
 
 int strsplit(const char* s, char limit, char** ret)
 {
-	int count = 0;
-	int len = strlen(s);
-	char* storage = malloc(len);
-	int storage_i = 0;
+	// int count = 0;
+	// int len = strlen(s);
+	// char* storage = malloc(len);
+	// int storage_i = 0;
 	
-	for (int i = 0; i < len; )
-	{
-		while (s[i] != limit && i < len)
-		{
-			storage[storage_i] = s[i];
-			++storage_i;
-			++i;
-		}
-		while (s[i] == limit && i < len)
-		{ ++i; }
-		if (storage_i > 0)
-		{
-			ret[count] = storage;
-			++count;
-			storage = malloc(len);
-			storage_i = 0;
-		}
-	}
-	ret[count] = storage;
-	return count;
+	// for (int i = 0; i < len; )
+	// {
+	// 	while (s[i] != limit && i < len)
+	// 	{
+	// 		storage[storage_i] = s[i];
+	// 		++storage_i;
+	// 		++i;
+	// 	}
+	// 	while (s[i] == limit && i < len)
+	// 	{ ++i; }
+	// 	if (storage_i > 0)
+	// 	{
+	// 		ret[count] = storage;
+	// 		++count;
+	// 		storage = malloc(len);
+	// 		storage_i = 0;
+	// 	}
+	// }
+	// ret[count] = storage;
+	// return count;
 }
