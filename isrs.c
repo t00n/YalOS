@@ -36,6 +36,24 @@ char* exception_messages[] =
 	"Reserved"
 };
 
+void* isrs_handler[32] =
+{
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0
+};
+
+void isrs_install_handler(int isrs, void (*handler)(struct regs *r))
+{
+    isrs_handler[isrs] = handler;
+}
+
+void isrs_uninstall_handler(int isrs)
+{
+    isrs_handler[isrs] = 0;
+}
+
 void isrs_install()
 {
     idt_set_gate(0, (unsigned)isr0, 0x08, 0x8E);	
@@ -83,6 +101,14 @@ void fault_handler(struct regs *r)
     /* Is this a fault whose number is from 0 to 31? */
     if (r->int_no < 32)
     {
+        /* This is a blank function pointer */
+        void (*handler)(struct regs *r);
+
+        handler = isrs_handler[r->int_no];
+        if (handler)
+        {
+            handler(r);
+        }
         /* Display the description for the Exception that occurred.
         *  In this tutorial, we will simply halt the system using an
         *  infinite loop */

@@ -1,7 +1,7 @@
 #ifndef __MEMORY_H
 #define __MEMORY_H
 
-#include "system.h"
+#include "isrs.h"
 
 enum
 {
@@ -28,7 +28,12 @@ enum
 	PG_GLOBAL = 256
 };
 
+unsigned int * page_directory;
+unsigned int ** page_tables;
+
 void mem_init();
+
+void page_fault_handler(struct regs * r);
 
 
 #endif

@@ -46,6 +46,12 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
+void* isrs_handler[32];
+
+void isrs_install_handler(int isrs, void (*handler)(struct regs *r));
+
+void isrs_uninstall_handler(int isrs);
+
 void isrs_install();
 
 void fault_handler(struct regs *r);
