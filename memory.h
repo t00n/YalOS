@@ -1,33 +1,20 @@
 #ifndef __MEMORY_H
 #define __MEMORY_H
 
-#include "isrs.h"
-
 struct regs;
-
-enum
-{
-	PDIR_NOTHING = 0,
-	PDIR_PRESENT = 1,
-	PDIR_RW = 2,
-	PDIR_USER = 4,
-	PDIR_WRITE = 8,
-	PDIR_NOCACHE = 16,
-	PDIR_ACCESS = 32,
-	PDIR_SIZE = 128
-};
 
 enum 
 {
-	PG_NOTHING = 0,
-	PG_PRESENT = 1,
-	PG_RW = 2,
-	PG_USER = 4,
-	PG_WRITE = 8,
-	PG_NOCACHE = 16,
-	PG_ACCESS = 32,
-	PG_DIRTY = 64,
-	PG_GLOBAL = 256
+	PAGE_PRESENT = 1,
+	PAGE_RW = 2,
+	PAGE_USER = 4,
+	PAGE_WRITE = 8,
+	PAGE_NOCACHE = 16,
+	PAGE_ACCESS = 32,
+	PAGE_DIRTY = 64,
+	PAGE_SIZE = 128,
+	PAGE_GLOBAL = 256,
+	PAGE_NOTHING = 0
 };
 
 unsigned int * page_directory;
