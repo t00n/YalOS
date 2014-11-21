@@ -3,6 +3,8 @@
 
 #include "isrs.h"
 
+struct regs;
+
 enum
 {
 	PDIR_NOTHING = 0,
@@ -29,7 +31,6 @@ enum
 };
 
 unsigned int * page_directory;
-unsigned int ** page_tables;
 
 void mem_init();
 

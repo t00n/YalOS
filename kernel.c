@@ -23,4 +23,7 @@ void kernel_main()
 	timer_install();
 	mem_init();
 	vga_init();
+	unsigned int * test = 0x500000;
+	*test = 'a';
+	vga_puts(0x500000);
 }

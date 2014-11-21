@@ -78,14 +78,13 @@ int strsplit(const char* s, char limit, char** ret)
 
 char* int2str(unsigned int n)
 {
-	char * ret;
+	char ret[10];
 	unsigned int i = 0;
 	while (n > 0)
 	{
-		ret[i] = n%10;
+		ret[i] = (n%10)+48;
 		n = n/10;
 		++i;
 	}
-	ret[i] = 0;
 	return ret;
 }
