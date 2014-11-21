@@ -36,23 +36,26 @@ void mem_init()
 	isrs_install_handler(14, &page_fault_handler);
 }
 
+void map_page(unsigned int virtual_addr, unsigned int physical_addr, unsigned int flags)
+{
+	unsigned int pdir, page, *new_page_table;
+	pdir = (virtual_addr >> 22); // 10 upper bits
+	page = (virtual_addr >> 12) & 0x3FF; // 10 next bits
+
+	new_page_table = page_directory + 1024*(pdir+1);
+	new_page_table[page] = (physical_addr & 0xFFFFF000) | PG_PRESENT | flags;
+	if ((page_directory[pdir] & PDIR_PRESENT) == 0) // if page dir not present, create page dir
+	{
+		page_directory[pdir] = (unsigned int)new_page_table;
+		page_directory[pdir] |= PDIR_PRESENT | flags;
+	}
+}
+
 // simple page fault handler that maps virtual memory identically
 void page_fault_handler(struct regs * r)
 {
-		unsigned int cr2, pdir, page, *new_page_table;
-
-		// get fault address
-		asm volatile("mov %%cr2, %0": "=b"(cr2));
-		pdir = (cr2 >> 22); // 10 upper bits
-		page = (cr2 >> 12) & 0x3FF; // 10 next bits
-		new_page_table = page_directory + 1024*(pdir+1);
-		new_page_table[page] = (cr2 & 0xFFFFF000) | PG_PRESENT;
-		if ((page_directory[pdir] & PDIR_PRESENT) == 0) // if page dir not present, create page dir
-		{
-			page_directory[pdir] = new_page_table;
-			page_directory[pdir] |= PDIR_PRESENT;
-		}
-		new_page_table[page] |= PG_RW;
-		page_directory[pdir] |= PDIR_RW;
-		
+	unsigned int cr2;
+	// get fault address
+	asm volatile("mov %%cr2, %0": "=b"(cr2));
+	map_page(cr2, cr2, PG_RW);
 }
