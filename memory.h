@@ -19,7 +19,11 @@ enum
 
 unsigned int * page_directory;
 
+unsigned int * getPageTable(unsigned int pdir);
+
 void mem_init();
+
+void map_page(unsigned int virtual_addr, unsigned int physical_addr, unsigned int flags);
 
 void page_fault_handler(struct regs * r);
 

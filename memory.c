@@ -19,7 +19,7 @@ void mem_init()
 	    page_directory[i] = PAGE_NOTHING;
 	}
 	// create the first page table after the page directory
-	unsigned int * first_page_table = page_directory + 1024;
+	unsigned int * first_page_table = getPageTable(0);
 	for (i = 0; i < 1024; i++)
 	{
 		first_page_table[i] = address | PAGE_RW | PAGE_PRESENT;
@@ -38,18 +38,22 @@ void mem_init()
 	isrs_install_handler(14, &page_fault_handler);
 }
 
+unsigned int * getPageTable(unsigned int pdir)
+{
+	return page_directory + 1024 * (pdir+1);
+}
+
 void map_page(unsigned int virtual_addr, unsigned int physical_addr, unsigned int flags)
 {
 	unsigned int pdir, page, *new_page_table;
 	pdir = (virtual_addr >> 22); // 10 upper bits
 	page = (virtual_addr >> 12) & 0x3FF; // 10 next bits
 
-	new_page_table = page_directory + 1024*(pdir+1);
+	new_page_table = getPageTable(pdir);
 	new_page_table[page] = (physical_addr & 0xFFFFF000) | PAGE_PRESENT | flags;
 	if ((page_directory[pdir] & PAGE_PRESENT) == 0) // if page dir not present, create page dir
 	{
-		page_directory[pdir] = (unsigned int)new_page_table;
-		page_directory[pdir] |= PAGE_PRESENT | flags;
+		page_directory[pdir] = (unsigned int)new_page_table | PAGE_PRESENT | flags;
 	}
 }
 

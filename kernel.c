@@ -24,7 +24,6 @@ void kernel_main()
 	mem_init();
 	vga_init();
 	unsigned int * test = 0x400000;
-	unsigned int value = *test;
 	vga_putc(*test);
 	*test = 'a';
 	vga_putc(*test);
