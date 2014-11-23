@@ -103,15 +103,18 @@ void fault_handler(struct regs *r)
     {
         /* This is a blank function pointer */
         void (*handler)(struct regs *r);
-        /* Display the description for the Exception that occurred.
-        *  In this tutorial, we will simply halt the system using an
-        *  infinite loop */
-        // vga_puts(exception_messages[r->int_no]);
 
         handler = isrs_handler[r->int_no];
         if (handler)
         {
             handler(r);
+        }
+        else
+        {
+            vga_puts("Exception not handled : ");
+            vga_puts(exception_messages[r->int_no]);
+            vga_puts(". System halted.");
+            for(;;);
         }
     }
 }

@@ -52,7 +52,6 @@ char kbdus[256] =
 void keyboard_handler(struct regs *r)
 {
     unsigned char scancode;
-
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
 
