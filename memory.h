@@ -27,5 +27,6 @@ void map_page(unsigned int virtual_addr, unsigned int physical_addr, unsigned in
 
 void page_fault_handler(struct regs * r);
 
+unsigned int get_free_page_frame();
 
 #endif

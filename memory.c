@@ -15,7 +15,6 @@ void mem_init()
 	page_directory = (unsigned int*)page_aligned_end;
 	for(i = 0; i < 1024; i++)
 	{
-	    //attribute: supervisor level, read/write, not present.
 	    page_directory[i] = PAGE_NOTHING;
 	}
 	// create the first page table after the page directory
@@ -26,8 +25,7 @@ void mem_init()
 		address += 4096;
 	}
 	// assign a page table and make it present in memory
-	page_directory[0] = (unsigned int)first_page_table;
-	page_directory[0] |= PAGE_RW | PAGE_PRESENT;
+	page_directory[0] = (unsigned int)first_page_table | PAGE_RW | PAGE_PRESENT;
 	//moves page_directory (which is a pointer) into the cr3 register.
 	asm volatile("mov %0, %%cr3":: "b"(page_directory));
 	//reads cr0, switches the "paging enable" bit, and writes it back.
@@ -35,7 +33,7 @@ void mem_init()
 	cr0 |= 0x80000000;
 	asm volatile("mov %0, %%cr0":: "b"(cr0));
 	// Now pagination is enabled the first 1024 pages of 4K (= 4M) are present in memory and identity-mapped
-	isrs_install_handler(14, &page_fault_handler);
+	isrs_install_handler(14, page_fault_handler);
 }
 
 unsigned int * getPageTable(unsigned int pdir)
@@ -61,20 +59,16 @@ void map_page(unsigned int virtual_addr, unsigned int physical_addr, unsigned in
 void page_fault_handler(struct regs * r)
 {
 	unsigned int cr2;
-	vga_puts("page fault");
-	vga_putnl();
 	// get fault address
 	asm volatile("mov %%cr2, %0": "=b"(cr2));
 	if ((r->err_code & 1) == 0) // page not present in memory
 	{
 		if ((r->err_code & 2) == 0) // read access
 		{
-			vga_puts("read");
 			map_page(cr2, cr2, PAGE_NOTHING);
 		}
 		else // write access
 		{
-			vga_puts("write");
 			map_page(cr2, cr2, PAGE_RW);
 		}
 	}
@@ -83,4 +77,9 @@ void page_fault_handler(struct regs * r)
 		vga_puts("protection fault");
 
 	}
+}
+
+unsigned int get_free_page_frame()
+{
+
 }
