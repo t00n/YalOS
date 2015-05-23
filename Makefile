@@ -14,7 +14,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) $< -o $@
 
 .s.o:
-	nasm -felf boot.s -o boot.o
+	nasm -felf $< -o $@
 
 .PHONY: clean mrproper
 
