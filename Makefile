@@ -5,9 +5,6 @@ CC=i686-elf-gcc
 CFLAGS=-c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LDFLAGS=-ffreestanding -O2 -nostdlib -lgcc
 
-run: all
-	qemu-system-i386 -kernel $(EXEC) -m 3G
-
 all: $(SRC) boot.s $(EXEC)
 
 $(EXEC): $(OBJ)
@@ -19,6 +16,9 @@ $(EXEC): $(OBJ)
 .s.o:
 	nasm -felf $< -o $@
 
+run: all
+	qemu-system-i386 -kernel $(EXEC) -m 3G
+	
 .PHONY: clean mrproper
 
 clean:
