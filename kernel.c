@@ -24,5 +24,7 @@ void kernel_main()
 	mem_init();
 	vga_init();
 	__asm__ __volatile__("sti");
+	// unsigned char * test = 0xFFFFF00;
+	// (*test) = 'c';
 	for(;;);
 }
